@@ -1,70 +1,66 @@
 import Link from "next/link";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { SiteFooter } from "@/components/marketing/site-footer";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { pricingPlans, faqs } from "@/lib/content";
-
-const valueItems = [
-  { title: "Flat-fee legal ops", body: "Predictable pricing for contract review and drafting, designed for fast-moving teams." },
-  { title: "Attorney-led output", body: "Experienced counsel reviews every deliverable. AI accelerates internal research and process." },
-  { title: "Faster turnaround", body: "Structured workflows, less email friction, and clear matter-level status updates." },
-  { title: "Slack-oriented collaboration", body: "Collaborate in portal by default, then activate Slack as an optional workspace." }
-];
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { faqs, pricingPlans } from "@/lib/content";
 
 export default function HomePage() {
   return (
     <main>
       <SiteHeader />
 
-      <section className="section container-frame pt-24">
-        <div className="inline-flex rounded-full border border-lime-300/40 bg-lime-300/10 px-3 py-1 text-xs text-lime-200">AI-native law firm for startups & growth companies</div>
-        <h1 className="mt-5 max-w-4xl">The AI-native law firm for fast-moving companies.</h1>
-        <p className="mt-6 max-w-2xl text-lg text-zinc-400">Flat-fee contract review, fast turnaround, and human attorney oversight with AI-accelerated internal workflows.</p>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <Button asChild size="lg"><Link href="/portal/sign-up">Get Started</Link></Button>
-          <Button asChild variant="outline" size="lg"><a href="mailto:hello@pixelwiselegal.com">Book a Consultation</a></Button>
-        </div>
+      <section className="section container-tight text-center">
+        <h1 className="mx-auto max-w-2xl">Legal work, handled clearly.</h1>
+        <p className="mx-auto mt-4 max-w-xl text-zinc-500">Flat-fee contracts, faster turnarounds, attorney-led delivery, and AI-assisted internal workflows.</p>
+
+        <Card className="mx-auto mt-8 max-w-2xl text-left">
+          <CardHeader>
+            <h3>Start a request</h3>
+            <p className="mt-1 text-sm text-zinc-500">Upload a contract, describe what you need, or ask an advisory question.</p>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <Input placeholder="Describe your legal request..." />
+            <div className="flex flex-wrap gap-2">
+              <Button asChild><Link href="/portal/sign-up">Start contract review</Link></Button>
+              <Button asChild variant="outline"><Link href="/dashboard/new">Upload contract</Link></Button>
+            </div>
+          </CardContent>
+        </Card>
       </section>
 
-      <section id="why" className="section container-frame">
-        <h2>Built for modern legal execution</h2>
-        <div className="mt-8 grid gap-4 md:grid-cols-2">
-          {valueItems.map((item) => (
-            <Card key={item.title}><CardHeader><h3>{item.title}</h3></CardHeader><CardContent className="text-sm text-zinc-400">{item.body}</CardContent></Card>
-          ))}
-        </div>
-      </section>
-
-      <section id="how" className="section container-frame">
+      <section className="section container-tight">
         <h2>How it works</h2>
-        <div className="mt-8 grid gap-4 md:grid-cols-3">
-          <Card><CardHeader><p className="text-xs text-lime-200">01</p><h3>Start the engagement</h3></CardHeader><CardContent className="text-sm text-zinc-400">Create your account, define your matter, and choose your collaboration mode.</CardContent></Card>
-          <Card><CardHeader><p className="text-xs text-lime-200">02</p><h3>Attorney-led + AI-accelerated review</h3></CardHeader><CardContent className="text-sm text-zinc-400">Counsel handles legal analysis while AI improves throughput and internal precision.</CardContent></Card>
-          <Card><CardHeader><p className="text-xs text-lime-200">03</p><h3>Flat, predictable pricing</h3></CardHeader><CardContent className="text-sm text-zinc-400">Clear prices up front. Faster legal delivery with no hourly billing surprises.</CardContent></Card>
+        <div className="mt-5 grid gap-3">
+          {[
+            ["01", "Start the engagement", "Create your account and define the matter."],
+            ["02", "Attorney-led + AI-accelerated", "Counsel leads delivery while AI improves speed."],
+            ["03", "Clear pricing and delivery", "Flat fees, clear scope, predictable timelines."]
+          ].map(([n, t, d]) => (
+            <Card key={n}><CardContent className="flex items-start gap-3 pt-5"><p className="text-xs text-zinc-400">{n}</p><div><p className="text-sm font-medium">{t}</p><p className="text-sm text-zinc-500">{d}</p></div></CardContent></Card>
+          ))}
         </div>
       </section>
 
-      <section className="section container-frame">
+      <section className="section container-tight">
         <h2>Pricing</h2>
-        <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {pricingPlans.map((plan) => (
-            <Card key={plan.key}>
-              <CardHeader><p className="font-medium">{plan.title}</p></CardHeader>
-              <CardContent><p className="text-sm text-zinc-400">{plan.detail}</p><p className="mt-4 text-2xl font-semibold">{plan.price}</p></CardContent>
-            </Card>
+        <div className="mt-5 grid gap-3 md:grid-cols-2">
+          {pricingPlans.map((p) => (
+            <Card key={p.key}><CardContent className="pt-5"><p className="text-sm font-medium">{p.title}</p><p className="text-sm text-zinc-500">{p.detail}</p><p className="mt-2 text-xl font-semibold">{p.price}</p></CardContent></Card>
           ))}
         </div>
       </section>
 
-      <section className="section container-frame">
-        <h2>FAQs</h2>
-        <div className="mt-8 space-y-4">
-          {faqs.map((f) => (
-            <Card key={f.q}><CardHeader><h3>{f.q}</h3></CardHeader><CardContent className="text-sm text-zinc-400">{f.a}</CardContent></Card>
+      <section className="section container-tight">
+        <h2>FAQ</h2>
+        <div className="mt-5 space-y-3">
+          {faqs.slice(0, 4).map((f) => (
+            <Card key={f.q}><CardContent className="pt-5"><p className="text-sm font-medium">{f.q}</p><p className="mt-1 text-sm text-zinc-500">{f.a}</p></CardContent></Card>
           ))}
         </div>
       </section>
+
       <SiteFooter />
     </main>
   );

@@ -5,33 +5,31 @@ import { AppShell } from "@/components/dashboard/app-shell";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { SlackConnectionCard } from "@/components/dashboard/slack-connection-card";
 
 export default async function DashboardPage() {
   const user = await requireUser();
   const supabase = createClient();
   const { data: profile } = await supabase.from("profiles").select("company_id,first_name").eq("user_id", user.id).single();
-  const { data: matters } = await supabase.from("matters").select("id,title,status,matter_type,created_at").eq("company_id", profile?.company_id).order("created_at", { ascending: false });
+  const { data: matters } = await supabase.from("matters").select("id,title,status,matter_type").eq("company_id", profile?.company_id).order("created_at", { ascending: false });
   const { data: acceptance } = await supabase.from("engagement_acceptances").select("accepted_at").eq("user_id", user.id).limit(1);
 
   return (
-    <AppShell title="Dashboard" subtitle="Track matters, updates, payments, and collaboration settings." rightRail={<SlackConnectionCard companyId={profile?.company_id || ""} />}>
-      <div className="grid gap-4 md:grid-cols-3">
-        <Card><CardHeader className="text-sm font-medium">Engagement</CardHeader><CardContent>{acceptance?.length ? <Badge>Accepted</Badge> : <Link href="/engagement" className="text-sm text-lime-300">Pending acceptance</Link>}</CardContent></Card>
-        <Card><CardHeader className="text-sm font-medium">Payment status</CardHeader><CardContent className="text-sm text-zinc-400">Recorded per matter after checkout.</CardContent></Card>
-        <Card><CardHeader className="text-sm font-medium">Uploaded files</CardHeader><CardContent className="text-sm text-zinc-400">Contract uploads and deliverables appear on each matter page.</CardContent></Card>
+    <AppShell title={`Welcome${profile?.first_name ? `, ${profile.first_name}` : ""}`} subtitle="A focused workspace for legal requests.">
+      <div className="mt-6 grid gap-3 md:grid-cols-3">
+        <Card><CardContent className="pt-5"><p className="text-xs text-zinc-500">Engagement</p>{acceptance?.length ? <Badge>Accepted</Badge> : <Link href="/engagement" className="text-sm text-zinc-800 underline">Pending</Link>}</CardContent></Card>
+        <Card><CardContent className="pt-5"><p className="text-xs text-zinc-500">Payment</p><p className="text-sm">Per-matter status</p></CardContent></Card>
+        <Card><CardContent className="pt-5"><p className="text-xs text-zinc-500">Collaboration</p><p className="text-sm">Portal-first · Slack optional</p></CardContent></Card>
       </div>
-      <Card className="mt-6">
-        <CardHeader className="flex flex-row items-center justify-between"><h3 className="text-base font-medium">Active matters</h3><Button asChild size="sm"><Link href="/dashboard/new">New matter</Link></Button></CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            {matters?.length ? matters.map((matter) => (
-              <Link key={matter.id} href={`/dashboard/matters/${matter.id}`} className="flex items-center justify-between rounded-xl border border-white/10 bg-black/20 px-4 py-3 hover:bg-white/5">
-                <div><p className="text-sm font-medium">{matter.title}</p><p className="text-xs text-zinc-500">{matter.matter_type}</p></div>
-                <Badge>{matter.status}</Badge>
-              </Link>
-            )) : <p className="text-sm text-zinc-400">No matters yet.</p>}
-          </div>
+
+      <Card className="mt-4">
+        <CardHeader className="flex flex-row items-center justify-between"><h3>Active matters</h3><Button asChild size="sm"><Link href="/dashboard/new">Start request</Link></Button></CardHeader>
+        <CardContent className="space-y-2">
+          {matters?.length ? matters.map((m) => (
+            <Link key={m.id} href={`/dashboard/matters/${m.id}`} className="flex items-center justify-between rounded-xl border border-zinc-200 bg-white px-3 py-2 hover:bg-zinc-50">
+              <div><p className="text-sm font-medium">{m.title}</p><p className="text-xs text-zinc-500">{m.matter_type}</p></div>
+              <Badge>{m.status}</Badge>
+            </Link>
+          )) : <p className="text-sm text-zinc-500">No matters yet.</p>}
         </CardContent>
       </Card>
     </AppShell>

@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 body {
-  @apply bg-[#070b08] text-zinc-100 antialiased;
+  @apply bg-[#f7f7f4] text-zinc-900 antialiased;
 }
 
 h1 {
@@ -15,21 +15,25 @@ h1 {
 }
 
 h2 {
-  @apply text-3xl font-semibold tracking-tight md:text-4xl;
+  @apply text-2xl font-semibold tracking-tight md:text-3xl;
 }
 
 h3 {
-  @apply text-xl font-medium tracking-tight;
+  @apply text-lg font-medium tracking-tight;
+}
+
+.container-tight {
+  @apply mx-auto w-full max-w-3xl px-6;
+}
+
+.container-wide {
+  @apply mx-auto w-full max-w-5xl px-6;
 }
 
 .section {
-  @apply py-20 md:py-24;
-}
-
-.container-frame {
-  @apply mx-auto max-w-6xl px-6;
+  @apply py-14 md:py-16;
 }
 
 .muted {
-  @apply text-zinc-400;
+  @apply text-zinc-500;
 }

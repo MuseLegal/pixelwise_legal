@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-[#070b08] text-zinc-100 antialiased;
+}
+
+h1 {
+  @apply text-4xl font-semibold tracking-tight md:text-6xl;
+}
+
+h2 {
+  @apply text-3xl font-semibold tracking-tight md:text-4xl;
+}
+
+h3 {
+  @apply text-xl font-medium tracking-tight;
+}
+
+.section {
+  @apply py-20 md:py-24;
+}
+
+.container-frame {
+  @apply mx-auto max-w-6xl px-6;
+}
+
+.muted {
+  @apply text-zinc-400;
+}

@@ -5,13 +5,16 @@ import { faqs } from "@/lib/content";
 
 export default function FaqPage() {
   return (
-    <main>
+    <main className="bg-white">
       <SiteHeader />
-      <section className="container">
-        <h1 className="text-5xl font-semibold">FAQs</h1>
-        <div className="mt-8 space-y-4">
+      <section className="section mx-auto max-w-6xl px-6">
+        <h1>Frequently asked questions</h1>
+        <div className="mt-10 space-y-4">
           {faqs.map((f) => (
-            <Card key={f.q}><CardHeader><h2 className="font-medium">{f.q}</h2></CardHeader><CardContent className="text-zinc-600">{f.a}</CardContent></Card>
+            <Card key={f.q}>
+              <CardHeader><h3>{f.q}</h3></CardHeader>
+              <CardContent className="text-sm text-zinc-600">{f.a}</CardContent>
+            </Card>
           ))}
         </div>
       </section>

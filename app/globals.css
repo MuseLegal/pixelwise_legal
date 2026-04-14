@@ -6,14 +6,35 @@
   color-scheme: light;
 }
 
+* {
+  @apply border-border;
+}
+
 body {
-  @apply bg-background text-foreground antialiased;
+  @apply bg-white text-zinc-950 antialiased;
 }
 
-section {
-  @apply py-20;
+h1 {
+  @apply text-4xl font-semibold tracking-tight md:text-6xl;
 }
 
-h1, h2, h3, h4 {
-  @apply tracking-tight;
+h2 {
+  @apply text-3xl font-semibold tracking-tight;
+}
+
+h3 {
+  @apply text-xl font-medium tracking-tight;
+}
+
+p.muted,
+.text-muted {
+  @apply text-zinc-500;
+}
+
+.section {
+  @apply py-20 md:py-24;
+}
+
+.container-narrow {
+  @apply mx-auto w-full max-w-3xl px-6;
 }

@@ -5,20 +5,14 @@ import { pricingPlans } from "@/lib/content";
 
 export default function PricingPage() {
   return (
-    <main className="bg-white">
+    <main>
       <SiteHeader />
-      <section className="section mx-auto max-w-6xl px-6">
-        <h1>Flat-fee legal pricing.</h1>
-        <p className="mt-4 max-w-2xl text-zinc-500">No hourly surprises. Each engagement starts with clear scope and clear cost.</p>
+      <section className="section container-frame">
+        <h1>Transparent, flat-fee pricing</h1>
+        <p className="mt-4 max-w-2xl text-zinc-400">Designed for product teams that need speed and certainty in legal execution.</p>
         <div className="mt-10 grid gap-4 md:grid-cols-2">
           {pricingPlans.map((plan) => (
-            <Card key={plan.key}>
-              <CardHeader><h3>{plan.title}</h3></CardHeader>
-              <CardContent>
-                <p className="text-sm text-zinc-500">{plan.detail}</p>
-                <p className="mt-3 text-3xl font-semibold">{plan.price}</p>
-              </CardContent>
-            </Card>
+            <Card key={plan.key}><CardHeader><h3>{plan.title}</h3></CardHeader><CardContent><p className="text-sm text-zinc-400">{plan.detail}</p><p className="mt-3 text-3xl font-semibold">{plan.price}</p></CardContent></Card>
           ))}
         </div>
       </section>

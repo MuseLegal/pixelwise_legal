@@ -17,16 +17,15 @@ export default async function MatterDetailPage({ params }: { params: { id: strin
   if (!matter) return notFound();
 
   return (
-    <AppShell title={matter.title} subtitle="Matter status, files, updates, and delivery timeline.">
+    <AppShell title={matter.title} subtitle="Matter status, files, updates, and deliverables.">
       <div className="grid gap-4 md:grid-cols-3">
         <Card><CardHeader className="text-sm font-medium">Matter status</CardHeader><CardContent><Badge>{matter.status}</Badge></CardContent></Card>
-        <Card><CardHeader className="text-sm font-medium">Payment status</CardHeader><CardContent className="text-sm text-zinc-600">{payment?.status || "pending"}{payment?.amount_cents ? ` · $${payment.amount_cents / 100}` : ""}</CardContent></Card>
-        <Card><CardHeader className="text-sm font-medium">Slack collaboration</CardHeader><CardContent className="text-sm text-zinc-600">{matter.slack_requested ? "Requested" : "Portal-only"}</CardContent></Card>
+        <Card><CardHeader className="text-sm font-medium">Payment status</CardHeader><CardContent className="text-sm text-zinc-400">{payment?.status || "pending"}{payment?.amount_cents ? ` · $${payment.amount_cents / 100}` : ""}</CardContent></Card>
+        <Card><CardHeader className="text-sm font-medium">Slack collaboration</CardHeader><CardContent className="text-sm text-zinc-400">{matter.slack_requested ? "Requested" : "Portal-only"}</CardContent></Card>
       </div>
-
-      <Card className="mt-6"><CardHeader><h3>Description</h3></CardHeader><CardContent className="text-sm text-zinc-600">{matter.description}</CardContent></Card>
-      <Card className="mt-6"><CardHeader><h3>Uploaded files & deliverables</h3></CardHeader><CardContent>{files?.length ? files.map((f) => <p key={f.storage_path} className="text-sm text-zinc-600">{f.file_name} ({f.file_kind})</p>) : <p className="text-sm text-zinc-500">No files yet.</p>}</CardContent></Card>
-      <Card className="mt-6"><CardHeader><h3>Recent updates</h3></CardHeader><CardContent>{comments?.length ? comments.map((c, i) => <p key={i} className="mb-3 text-sm text-zinc-600">{c.body}</p>) : <p className="text-sm text-zinc-500">No updates yet.</p>}</CardContent></Card>
+      <Card className="mt-6"><CardHeader><h3>Description</h3></CardHeader><CardContent className="text-sm text-zinc-400">{matter.description}</CardContent></Card>
+      <Card className="mt-6"><CardHeader><h3>Uploaded files & deliverables</h3></CardHeader><CardContent>{files?.length ? files.map((f) => <p key={f.storage_path} className="text-sm text-zinc-400">{f.file_name} ({f.file_kind})</p>) : <p className="text-sm text-zinc-400">No files yet.</p>}</CardContent></Card>
+      <Card className="mt-6"><CardHeader><h3>Recent updates</h3></CardHeader><CardContent>{comments?.length ? comments.map((c, i) => <p key={i} className="mb-3 text-sm text-zinc-400">{c.body}</p>) : <p className="text-sm text-zinc-400">No updates yet.</p>}</CardContent></Card>
     </AppShell>
   );
 }

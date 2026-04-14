@@ -15,33 +15,22 @@ export default async function DashboardPage() {
   const { data: acceptance } = await supabase.from("engagement_acceptances").select("accepted_at").eq("user_id", user.id).limit(1);
 
   return (
-    <AppShell
-      title="Dashboard"
-      subtitle="Track active matters, payments, engagement state, and collaboration settings."
-      rightRail={<SlackConnectionCard companyId={profile?.company_id || ""} />}
-    >
+    <AppShell title="Dashboard" subtitle="Track matters, updates, payments, and collaboration settings." rightRail={<SlackConnectionCard companyId={profile?.company_id || ""} />}>
       <div className="grid gap-4 md:grid-cols-3">
-        <Card><CardHeader className="text-sm font-medium">Engagement</CardHeader><CardContent>{acceptance?.length ? <Badge>Accepted</Badge> : <Link href="/engagement" className="text-sm text-[#16a34a]">Pending acceptance</Link>}</CardContent></Card>
-        <Card><CardHeader className="text-sm font-medium">Payment status</CardHeader><CardContent className="text-sm text-zinc-500">Recorded per matter after checkout.</CardContent></Card>
-        <Card><CardHeader className="text-sm font-medium">Uploaded files</CardHeader><CardContent className="text-sm text-zinc-500">Client uploads and deliverables appear on each matter.</CardContent></Card>
+        <Card><CardHeader className="text-sm font-medium">Engagement</CardHeader><CardContent>{acceptance?.length ? <Badge>Accepted</Badge> : <Link href="/engagement" className="text-sm text-lime-300">Pending acceptance</Link>}</CardContent></Card>
+        <Card><CardHeader className="text-sm font-medium">Payment status</CardHeader><CardContent className="text-sm text-zinc-400">Recorded per matter after checkout.</CardContent></Card>
+        <Card><CardHeader className="text-sm font-medium">Uploaded files</CardHeader><CardContent className="text-sm text-zinc-400">Contract uploads and deliverables appear on each matter page.</CardContent></Card>
       </div>
-
       <Card className="mt-6">
-        <CardHeader className="flex flex-row items-center justify-between">
-          <h3 className="text-base font-medium">Active matters</h3>
-          <Button asChild size="sm"><Link href="/dashboard/new">New matter</Link></Button>
-        </CardHeader>
+        <CardHeader className="flex flex-row items-center justify-between"><h3 className="text-base font-medium">Active matters</h3><Button asChild size="sm"><Link href="/dashboard/new">New matter</Link></Button></CardHeader>
         <CardContent>
           <div className="space-y-3">
             {matters?.length ? matters.map((matter) => (
-              <Link key={matter.id} href={`/dashboard/matters/${matter.id}`} className="flex items-center justify-between rounded-lg border border-zinc-200 px-4 py-3 hover:bg-zinc-50">
-                <div>
-                  <p className="text-sm font-medium">{matter.title}</p>
-                  <p className="text-xs text-zinc-500">{matter.matter_type}</p>
-                </div>
+              <Link key={matter.id} href={`/dashboard/matters/${matter.id}`} className="flex items-center justify-between rounded-xl border border-white/10 bg-black/20 px-4 py-3 hover:bg-white/5">
+                <div><p className="text-sm font-medium">{matter.title}</p><p className="text-xs text-zinc-500">{matter.matter_type}</p></div>
                 <Badge>{matter.status}</Badge>
               </Link>
-            )) : <p className="text-sm text-zinc-500">No matters yet.</p>}
+            )) : <p className="text-sm text-zinc-400">No matters yet.</p>}
           </div>
         </CardContent>
       </Card>
